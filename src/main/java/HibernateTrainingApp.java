@@ -32,6 +32,10 @@ public class HibernateTrainingApp {
         Integer empID1 = ME.addEmployee("Zara", "Ali", 1000);
         Integer empID2 = ME.addEmployee("Daisy", "Das", 5000);
         Integer empID3 = ME.addEmployee("John", "Paul", 10000);
+        Integer empID4 = ME.addEmployee("Zara", "Ali", 2000);
+        Integer empID5 = ME.addEmployee("Daisy", "Das", 5000);
+        Integer empID6 = ME.addEmployee("John", "Paul", 5000);
+        Integer empID7 = ME.addEmployee("Mohd", "Yasee", 3000);
 
         ME.getListOfEmployeesWithSalaryHigherThan6000();
         // /* List down all the employees */
@@ -147,5 +151,7 @@ public class HibernateTrainingApp {
             session.close();
         }
     }
+
+
 }
 
