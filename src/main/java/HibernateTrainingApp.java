@@ -9,6 +9,8 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.Query;
+
 
 public class HibernateTrainingApp {
 
@@ -126,6 +128,19 @@ public class HibernateTrainingApp {
         }
     }
 
-    
+    public void getListOfEmployeesWithSalaryHigherThan6000() {
+        Session session = factory.openSession();
+        String query = "FROM Employee E WHERE E.salary >6000";
+
+        try {
+            Query query1 = session.createQuery(query);
+            List<Employee> employees = (List<Employee>) query1.getResultList();
+            for (Employee employee : employees) {
+                System.out.println(employee);
+            }
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+    }
 }
 
