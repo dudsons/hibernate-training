@@ -15,11 +15,12 @@ import javax.persistence.Query;
 public class HibernateTrainingApp {
 
     private static SessionFactory factory;
+
     public static void main(String[] args) {
 
         try {
             factory = new Configuration().configure().addAnnotatedClass(Employee.class).
-                            buildSessionFactory();
+                    buildSessionFactory();
         } catch (Throwable ex) {
             System.err.println("Failed to create sessionFactory object." + ex);
             throw new ExceptionInInitializerError(ex);
@@ -32,21 +33,22 @@ public class HibernateTrainingApp {
         Integer empID2 = ME.addEmployee("Daisy", "Das", 5000);
         Integer empID3 = ME.addEmployee("John", "Paul", 10000);
 
-        /* List down all the employees */
-        ME.listEmployees();
-
-        /* Update employee's records */
-        ME.updateEmployee(empID1, 5000);
-
-        /* Delete an employee from the database */
-        ME.deleteEmployee(empID2);
-
-        /* List down new list of the employees */
-        ME.listEmployees();
+        ME.getListOfEmployeesWithSalaryHigherThan6000();
+        // /* List down all the employees */
+        // ME.listEmployees();
+        //
+        // /* Update employee's records */
+        // ME.updateEmployee(empID1, 5000);
+        //
+        // /* Delete an employee from the database */
+        // ME.deleteEmployee(empID2);
+        //
+        // /* List down new list of the employees */
+        // ME.listEmployees();
     }
 
     /* Method to CREATE an employee in the database */
-    public Integer addEmployee(String fname, String lname, int salary){
+    public Integer addEmployee(String fname, String lname, int salary) {
         Session session = factory.openSession();
         Transaction tx = null;
         Integer employeeID = null;
@@ -60,7 +62,7 @@ public class HibernateTrainingApp {
             employeeID = (Integer) session.save(employee);
             tx.commit();
         } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -69,14 +71,14 @@ public class HibernateTrainingApp {
     }
 
     /* Method to  READ all the employees */
-    public void listEmployees( ){
+    public void listEmployees() {
         Session session = factory.openSession();
         Transaction tx = null;
 
         try {
             tx = session.beginTransaction();
             List employees = session.createQuery("FROM Employee").list();
-            for (Iterator iterator = employees.iterator(); iterator.hasNext();){
+            for (Iterator iterator = employees.iterator(); iterator.hasNext(); ) {
                 Employee employee = (Employee) iterator.next();
                 System.out.print("First Name: " + employee.getFirstName());
                 System.out.print("  Last Name: " + employee.getLastName());
@@ -84,7 +86,7 @@ public class HibernateTrainingApp {
             }
             tx.commit();
         } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -92,18 +94,18 @@ public class HibernateTrainingApp {
     }
 
     /* Method to UPDATE salary for an employee */
-    public void updateEmployee(Integer EmployeeID, int salary ){
+    public void updateEmployee(Integer EmployeeID, int salary) {
         Session session = factory.openSession();
         Transaction tx = null;
 
         try {
             tx = session.beginTransaction();
-            Employee employee = (Employee)session.get(Employee.class, EmployeeID);
-            employee.setSalary( salary );
+            Employee employee = (Employee) session.get(Employee.class, EmployeeID);
+            employee.setSalary(salary);
             session.update(employee);
             tx.commit();
         } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -111,17 +113,17 @@ public class HibernateTrainingApp {
     }
 
     /* Method to DELETE an employee from the records */
-    public void deleteEmployee(Integer EmployeeID){
+    public void deleteEmployee(Integer EmployeeID) {
         Session session = factory.openSession();
         Transaction tx = null;
 
         try {
             tx = session.beginTransaction();
-            Employee employee = (Employee)session.get(Employee.class, EmployeeID);
+            Employee employee = (Employee) session.get(Employee.class, EmployeeID);
             session.delete(employee);
             tx.commit();
         } catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            if (tx != null) tx.rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -131,15 +133,18 @@ public class HibernateTrainingApp {
     public void getListOfEmployeesWithSalaryHigherThan6000() {
         Session session = factory.openSession();
         String query = "FROM Employee E WHERE E.salary >6000";
-
         try {
+            Transaction transaction = session.beginTransaction();
             Query query1 = session.createQuery(query);
             List<Employee> employees = (List<Employee>) query1.getResultList();
             for (Employee employee : employees) {
                 System.out.println(employee);
             }
-        }catch (RuntimeException e){
+            transaction.commit();
+        } catch (RuntimeException e) {
             e.printStackTrace();
+        } finally {
+            session.close();
         }
     }
 }
