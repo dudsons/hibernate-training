@@ -14,15 +14,15 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    @OneToMany(mappedBy = "author")
-    private Set<Message> message = new HashSet<>();
+    // @OneToMany(mappedBy = "author")
+    // private Set<Message> message = new HashSet<>();
 
     public Author() {
     }
 
     public Author(String name, Set<Message> message) {
         this.name = name;
-        this.message = message;
+        // this.message = message;
     }
 
     public long getId() {
@@ -41,13 +41,13 @@ public class Author {
         this.name = name;
     }
 
-    public Set<Message> getMessage() {
-        return message;
-    }
-
-    public void setMessage(Set<Message> message) {
-        this.message = message;
-    }
+    // public Set<Message> getMessage() {
+    //     return message;
+    // }
+    //
+    // public void setMessage(Set<Message> message) {
+    //     this.message = message;
+    // }
 
     @Override
     public boolean equals(Object o) {
@@ -55,13 +55,12 @@ public class Author {
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
         return id == author.id &&
-                Objects.equals(name, author.name) &&
-                Objects.equals(message, author.message);
+                Objects.equals(name, author.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, message);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -69,7 +68,30 @@ public class Author {
         return "Author{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", message=" + message +
                 '}';
     }
+
+    // @Override
+    // public boolean equals(Object o) {
+    //     if (this == o) return true;
+    //     if (o == null || getClass() != o.getClass()) return false;
+    //     Author author = (Author) o;
+    //     return id == author.id &&
+    //             Objects.equals(name, author.name) &&
+    //             Objects.equals(message, author.message);
+    // }
+    //
+    // @Override
+    // public int hashCode() {
+    //     return Objects.hash(id, name, message);
+    // }
+    //
+    // @Override
+    // public String toString() {
+    //     return "Author{" +
+    //             "id=" + id +
+    //             ", name='" + name + '\'' +
+    //             ", message=" + message +
+    //             '}';
+    // }
 }
