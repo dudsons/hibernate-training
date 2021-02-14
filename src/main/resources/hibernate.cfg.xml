@@ -23,8 +23,24 @@
         <property name = "hibernate.connection.password">
             marek
         </property>
+
+        <property name = "log4j.logger.org.hibernate.type">
+            trace
+        </property>
         <!-- List of XML mapping files -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
+
+<!--        <property name="log4j.appender.stdout=org.apache.log4j.ConsoleAppender"></property>-->
+<!--        <property name="log4j.appender.stdout.Target">System.out</property>-->
+<!--        <property name="log4j.appender.stdout.layout">org.apache.log4j.PatternLayout</property>-->
+<!--        <property name="log4j.appender.stdout.layout.ConversionPattern">%d{HH:mm:ss,SSS} %-5p [%c] - %m%n</property>-->
+<!--        <property name="log4j.rootLogger">info, stdout</property>-->
+<!--        # basic log level for all messages-->
+<!--        <property name="log4j.logger.org.hibernate">info</property>-->
+<!--        # SQL statements and parameters-->
+<!--        <property name="log4j.logger.org.hibernate.SQL">debug</property>-->
+<!--        <property name="log4j.logger.org.hibernate.type.descriptor.sql">trace</property>-->
+
 
     </session-factory>
 
