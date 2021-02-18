@@ -5,12 +5,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CascadeApp {
-
+    private static Logger logger =  LoggerFactory.getLogger(CascadeApp.class);
     private static SessionFactory sessionFactory = null;
 
 
@@ -23,7 +26,8 @@ public class CascadeApp {
                     .buildSessionFactory();
 
             addExampleData();
-            removeAllEmployeesUsingHqlQuery();
+            // removeAllEmployeesUsingHqlQuery();
+            removeAllEmployeesUsingSessionDelete();
         } catch (Exception e) {
             throw new HibernateException("Problem with loading sessionFactory" + e);
         }
@@ -58,8 +62,8 @@ public class CascadeApp {
 
             session.save(employee1);
             session.save(employee2);
-            session.save(phone1);
-            session.save(phone2);
+           session.save(phone1);
+           session.save(phone2);
 
             transaction.commit();
 
@@ -87,4 +91,27 @@ public class CascadeApp {
             session.close();
         }
     }
+
+    private static void removeAllEmployeesUsingSessionDelete (){
+        Session session = null;
+        Transaction transaction = null;
+
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            String hqlQuery = "From Employee";
+            List<Employee> employeeList = session.createQuery(hqlQuery).list();
+
+            for (Employee employee: employeeList) {
+                session.delete(employee);
+            }
+            transaction.commit();
+        }catch(Exception e ){
+            logger.info("Problem in removeAllEmployeesUsingSessionDelete");
+            throw new HibernateException(e);
+        }finally {
+            session.close();
+        }
+    }
+
 }
