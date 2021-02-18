@@ -1,2 +1,4 @@
 @OneToMany(cascade = CascadeType.ALL)
 - łączy w sobie wszystkie ustawienia kaskadowości. Dzięki temu można np. pominąć zapisywanie do sesji (session.save) obiektu, będącego w relacji. Zostanie to wykonane za nas.
+
+Usuwanie danych z tabeli, które są w relacji za pomocą HQL nie jest możliwe.

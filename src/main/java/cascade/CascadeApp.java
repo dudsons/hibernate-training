@@ -1,6 +1,9 @@
 package cascade;
 
-import org.hibernate.*;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 import java.util.HashSet;
@@ -18,8 +21,9 @@ public class CascadeApp {
                     .addAnnotatedClass(Employee.class)
                     .addAnnotatedClass(Phone.class)
                     .buildSessionFactory();
-            addExampleData();
 
+            addExampleData();
+            removeAllEmployeesUsingHqlQuery();
         } catch (Exception e) {
             throw new HibernateException("Problem with loading sessionFactory" + e);
         }
@@ -54,8 +58,8 @@ public class CascadeApp {
 
             session.save(employee1);
             session.save(employee2);
-//            session.save(phone1);
-//            session.save(phone2);
+            session.save(phone1);
+            session.save(phone2);
 
             transaction.commit();
 
@@ -66,4 +70,21 @@ public class CascadeApp {
         }
     }
 
+    private static void removeAllEmployeesUsingHqlQuery (){
+        Session session = null;
+        Transaction transaction = null;
+
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            String hqlQuery = "DELETE from Employee";
+            int resultAfterDelete = session.createQuery(hqlQuery).executeUpdate();
+            System.out.println("Int after delete is: " + resultAfterDelete);
+            transaction.commit();
+        }catch(Exception e ){
+            throw new HibernateException(e);
+        }finally {
+            session.close();
+        }
+    }
 }
