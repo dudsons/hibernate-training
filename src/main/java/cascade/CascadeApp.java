@@ -60,8 +60,10 @@ public class CascadeApp {
             employee2.setPhone(phones2);
 
 
-            session.save(employee1);
-            session.save(employee2);
+            long identifier1 = (long)session.save(employee1);
+            long identifier2 = (long)session.save(employee2);
+            logger.info("identifier of employee1: " + identifier1 );
+            logger.info("identifier of employee2: " + identifier2 );
            session.save(phone1);
            session.save(phone2);
 

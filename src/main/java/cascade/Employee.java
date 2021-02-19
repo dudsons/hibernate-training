@@ -13,7 +13,7 @@ public class Employee {
     private long id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "employee_id")
     private Set<Phone> phone;
 
