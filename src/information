@@ -22,3 +22,8 @@ Różnica pomiędzy clear(), evict() i close():
 - clear (); kiedy metoda jest wywoływana w obrębie tranzakcji wtedy wszystkie obiekty powiązane z sesja będą rozłączone/wyczyszczone albo nie będą więcej powiązane z instancją sesji.
 - evict(): usuwa obiekt z sesji, używana jest do odłączenia określonego obiektu z sesji
 - close(): kończy sesje, zwalnia połączenie z JDBC i czyści
+
+Flush:
+- domyślnie Hibernate wykonuje flush automatycznie:
+a) przed niektórymi wykonaniami zapytań
+b) kiedy tranzakcja jest committed
