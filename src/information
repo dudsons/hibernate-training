@@ -17,3 +17,8 @@ Różnica pomiędzy save(), persist():
 Różnica pomiędzy save() i saveORUpdate():
 - save() zawsze wywołuje INSERT i zapisuje obiekt do bazy danych
 - saveOrUpdate () jest bardziej uniwersalna, ale tworzy dodatkowy narzut, gdyż najpierw sprawdzane jest to czy dany obiekt istnieje. Jeżeli, tak to jest on aktualizowany, jeżeli nie to dodaje ten obiekt
+
+Różnica pomiędzy clear(), evict() i close():
+- clear (); kiedy metoda jest wywoływana w obrębie tranzakcji wtedy wszystkie obiekty powiązane z sesja będą rozłączone/wyczyszczone albo nie będą więcej powiązane z instancją sesji.
+- evict(): usuwa obiekt z sesji, używana jest do odłączenia określonego obiektu z sesji
+- close(): kończy sesje, zwalnia połączenie z JDBC i czyści
